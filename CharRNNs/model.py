@@ -15,7 +15,8 @@ class CharRNN():
     # 设每一个字母转换为的向量维度为embedding_size, 即inputs_size
     # 输入的每一句字母长度为num_steps
     # 每一次输入包含num_seqs句
-    # 每一层神经网络的隐藏层包含的神经数量为 lstm_size, 即state_size
+    # lstm内部的weights是BasicLstmCell函数中自己自带生成的, 不需要显示定义
+    # 每一层神经网络的隐藏层包含的神经元数量为 lstm_size, 即state_size
     # 包含神经网络的隐藏层的数量为 num_layers
     # 神经网络的学习率为 learn_rate
     # 神经网络的clip为该神经网络的梯度下降的最大的范数
@@ -96,7 +97,7 @@ class CharRNN():
 
         # 对lstm_outputs进行一定处理，
         # 使其变成二维的,
-        # 即维度为(num_seqs * num_steps, lstm_size)
+        # 即维度为(num_seqs * num _steps, lstm_size)
         x = tf.reshape(tf.concat(self.lstm_outputs, 1), [-1, self.lstm_size])
         # 定义输出层的参数
         with tf.variable_scope("softmax"):
